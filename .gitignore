@@ -1,8 +1,9 @@
 #mac files
 *.DS_STORE
 
-#course autograder
+#course autograder and solutions
 *autograder*
+*solution*
 
 #pycharm folder
 *.idea/*
