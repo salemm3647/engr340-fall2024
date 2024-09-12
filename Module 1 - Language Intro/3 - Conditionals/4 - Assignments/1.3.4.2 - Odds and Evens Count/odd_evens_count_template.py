@@ -1,6 +1,9 @@
 # bring in randomness cause we need it in our lives
 import random
 
+from numpy.ma.core import append, count
+
+
 ### Begin Dr. Forsyth Code. Do Not Modify ###
 
 # copy in Dr. Forsyth's random list function for use
@@ -29,3 +32,11 @@ num_evens = 0
 num_odds = 0
 
 ### YOUR CODE BEGINS HERE ###
+for element in nums:
+    if element %2==0:
+        num_evens +=1
+    else:
+        num_odds +=1
+print(nums)
+print(num_evens)
+print(num_odds)

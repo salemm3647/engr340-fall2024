@@ -24,11 +24,17 @@ vector_b = generate_random_int_list(fixed_length, maximum_value)
 Step 2: Iterate through the vector(s) and calculate the dot product
 """
 
-# store your result here. Do not change the name
+# store your result here. Do not change the name dot_product
+
 dot_product = 0
 
 ### Your code here
-
+add=0
+for place in range(0,(len(vector_a))):
+    a=vector_a[place]*vector_b[place]
+    add += a
+    
+dot_product=add
 """
 Step 3: Calculate the error of your dot_product compared with numpy's solution
 """

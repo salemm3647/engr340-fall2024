@@ -8,16 +8,16 @@ age = 19
 # a person's age is over 18. Also, have an else statement
 # if they are not over 18.
 
-if age:
-    print()
+if age>18:
+    print("Age is greater than 18")
 else:
-    print()
+    print("Age is not greater than 18")
 
 # Next, choose a value to make the following statement print out
 # the 2nd elif statement! You can also mess around to see how other
 # values print different outcomes!
 
-temperature = -1
+temperature = 70
 
 if temperature <= 32:
     print("It's Below Freezing! Brrrrr")
@@ -35,10 +35,10 @@ else:
 weight = 170
 
 # First, write an if statement to check if the weight is over 150:
-if weight:
+if weight>150:
     print("Weight is over 150!")
     # Now in here, write an if statement to check if it's below 180:
-    if weight:
+    if weight<180:
         print("Weight is also under 180!")
     else:
         print("Weight is also over 180!")

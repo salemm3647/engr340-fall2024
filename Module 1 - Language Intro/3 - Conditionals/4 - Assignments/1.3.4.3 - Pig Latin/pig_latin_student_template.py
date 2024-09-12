@@ -1,4 +1,8 @@
 # helpful function to see if word starts with vowel
+from operator import concat
+from os.path import split
+
+
 def starts_with_vowel(word):
     """
     Return True if the work starts with a vowel, False otherwise
@@ -37,18 +41,27 @@ for word in words:
     if len(word) < 3:
         # place the word in the pig_latin list
         ### your code here ###
+        pig_latin.append(word)
         continue
 
     # starts with vowel, modify accordingly and put in list
     elif starts_with_vowel(word) == True:
         # modify the word and place in pig_latin list
         ### your code here ###
+        v='vay'
+        a=word+v
+        pig_latin.append(a)
         continue
 
     # starts with consonant, modify accordingly  and put in list
     else:
         # modify word and place in pig_latin list
         ### your code here ###
+        b= word[1:]
+        c=word[0]
+        y='ay'
+        d=b+c+y
+        pig_latin.append(d)
         continue
 
 # a new sentence in which you will re-assemble each of the modified words

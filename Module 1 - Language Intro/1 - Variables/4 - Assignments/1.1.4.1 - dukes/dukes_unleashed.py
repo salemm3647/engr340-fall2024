@@ -9,7 +9,16 @@ Note: this problem does not require the "compounding interest" formula from the 
 """
 
 ### Your code here ###
+#variables
+Ain=30792 #In state total
+Aout=47882 #Out state total
+#calculations
+#In order to donate 1 year of tuition every year,
+# the interest (5% must be equal to cost of tuition
+in_state_gift=Ain/.05
+out_state_gift=Aout/.05
 
-in_state_gift = 0
-
-out_state_gift = 0
+print("In-state tuition is "+str(Ain))
+print("Out-of-state tuition is "+str(Aout))
+print("Principle for In-state-gift is "+str(in_state_gift))
+print("Principle for Out-of-state-gift is "+str(out_state_gift))

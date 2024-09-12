@@ -11,11 +11,19 @@ would his investment be worth in 10-year and 20-year bonds? Assume the 10-year b
 the 20-year bonds pay 4.32%, with each compounding annually.
 """
 
+#from idlelib.config import InvalidConfigSet
+
 ### all your code below ###
+#Equation: final = principal * ((1 + (rate)) ** n)
 
+P= 33 * (10 ** 9)
+Rten=.0396
+Rtwen=.0432
+Nten=10
+Ntwen=20
 
-# final answer for 10-year
-ten_year_final = None
+ten_year_final=(P * ((1 + Rten) ** Nten))
+print("The 10 year investment would be worth "+str(ten_year_final))
 
-# final answer for 20-year
-twenty_year_final = None
+twenty_year_final=P*((1+Rtwen)**Ntwen)
+print("The 20 year investment would be worth "+str(twenty_year_final))

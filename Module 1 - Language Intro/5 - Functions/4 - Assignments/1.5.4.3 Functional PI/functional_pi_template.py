@@ -10,10 +10,30 @@ def my_pi(target_error):
     """
 
     ### YOUR CODE HERE ###
+    #starting pi variables
+    a = 1
+    b = 1 / (math.sqrt(2))
+    t = 1 / 4
+    p = 1
+
+    pi_func=0
+    #the difference between real value and estimated value needs to fall below the target error
+    while (math.pi-pi_func)>target_error:
+        A=(a+b)/2
+        B=math.sqrt(a*b)
+        P=2*p
+        T=t-p*(A-a)**2
+
+        a=A
+        b=B
+        p=P
+        t=T
+
+        pi_func=((a+b)**2)/(4*t)
+
 
     # change this so an actual value is returned
-    return 0
-
+    return pi_func
 
 
 

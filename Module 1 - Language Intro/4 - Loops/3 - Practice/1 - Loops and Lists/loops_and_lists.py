@@ -25,3 +25,7 @@ for word in words:
 # hint: you will need to add "num" to "total"
 numbers = [4, 9, 26, 3]
 total = 0
+for num in numbers:
+    total += num
+
+print(total)
