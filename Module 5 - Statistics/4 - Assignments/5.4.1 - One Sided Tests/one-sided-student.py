@@ -35,6 +35,14 @@ def one_sided_tests(_files: list, _mean: float, _alpha: float, _less_than: bool)
     reject_null_hypothesis = []
 
     # YOUR CODE HERE #
+    for file in _files:
+        expected_mean = _mean
+        data_array = np.array(file)
+        (stat, p_value) = ttest_1samp(data_array, popmean=expected_mean, alternative='two-sided')
+
+        if p_value > _alpha:
+            reject_null_hypothesis.append(file)
+
 
     # return samples that were rejected
     return reject_null_hypothesis
