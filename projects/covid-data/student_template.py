@@ -117,15 +117,14 @@ def second_question(data):
     num_casesr = []
     num_casesh = []
     for thing in rock:
-        case = thing[4]
+        case = thing[3]
         num_casesr.append(case)
 
     for thing in harr:
-        case = thing[4]
+        case = thing[3]
         num_casesh.append(case)
 
-    # find out what the worse amount of new cases was by subtracting the previous day from current day.
-    # if the new # of cases is bigger than last biggest it is saved
+    # make a list of the number of new cases, then find the max
     #Harrisonburg
     add_hlist = []
     for i in range(0,(len(num_casesh))):
@@ -171,11 +170,11 @@ def third_question(data):
     num_casesr=[]
     num_casesh=[]
     for thing in rock:
-        case = thing[4]
+        case = thing[3]
         num_casesr.append(case)
 
     for thing in harr:
-        case = thing[4]
+        case = thing[3]
         num_casesh.append(case)
 
     #put all the new cases in a list, find the average of every 7 days and store the highest average
@@ -210,15 +209,15 @@ def third_question(data):
         case.append(newcases)
         before = i
     oldav = 0
-    inav = 0
+    inavh = 0
     for j in case:
         k = case.index(j)
         sevenav = sum(case[k-3:k+3])/7
         if sevenav > oldav:
             oldav = sevenav
-            inav = k
-    linah = harr[inav-3]
-    linbh = harr[inav+3]
+            inavh = k
+    linah = harr[inavh-3]
+    linbh = harr[inavh+3]
     daah = linah[0]
     dabh = linbh[0]
 
