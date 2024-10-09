@@ -1,5 +1,9 @@
 import sys
 
+from fontTools.misc.cython import returns
+from numpy.ma.extras import average
+
+
 
 def parse_nyt_data(file_path=''):
     """
@@ -38,7 +42,7 @@ def parse_nyt_data(file_path=''):
             continue
 
         # format is date,county,state,fips,cases,deaths
-        (date,county, state, fips, cases, deaths) = line.rstrip().split(",")
+        (date, county, state, fips, cases, deaths) = line.rstrip().split(",")
 
         # clean up the data to remove empty entries
         if cases=='':
@@ -52,10 +56,13 @@ def parse_nyt_data(file_path=''):
         except ValueError:
             print('Invalid parse of ', entry)
 
-        # place entries as tuple into list
-        data.append(entry)
+        # place entries as tuple into list. This was changed to just give Rockingham and Harrisonburg
+        if county == 'Rockingham' and state == 'Virginia':
+            data.append(entry)
+        if county == 'Harrisonburg city' and state == 'Virginia':
+            data.append(entry)
 
-
+        #data.append(entry)
     return data
 
 def first_question(data):
@@ -67,7 +74,24 @@ def first_question(data):
     """
 
     # your code here
-    return
+    #create empty list
+    rock=[]
+    harr=[]
+    #put tuples into two separate lists: one for Harrisonburg City (HBC) and one for Rockingham (RH)
+    #the lines are tuples and county is in the 1st index
+    for line in data:
+        if line[1] == 'Rockingham':
+            rock.append(line)
+        else:
+            harr.append(line)
+    #grab the first instance of HBC and RH
+    #Then grab the date of that first instant, then print
+    firstrock = rock[0]
+    firstdaterock = firstrock[0]
+    firstharr = harr[0]
+    firstharrdate = firstharr[0]
+
+    return firstharrdate , firstdaterock
 
 def second_question(data):
     """
@@ -78,14 +102,139 @@ def second_question(data):
     """
 
     # your code here
-    return
+    # create empty list (copied from 1)
+    rock = []
+    harr = []
+    # put tuples into two separate lists: one for Harrisonburg City (HBC) and one for Rockingham (RH)
+    # the lines are tuples and county is in the 1st index (copied from 1)
+    for line in data:
+        if line[1] == 'Rockingham':
+            rock.append(line)
+        else:
+            harr.append(line)
+
+    # new lists for #of cases
+    num_casesr = []
+    num_casesh = []
+    for thing in rock:
+        case = thing[4]
+        num_casesr.append(case)
+
+    for thing in harr:
+        case = thing[4]
+        num_casesh.append(case)
+
+    # find out what the worse amount of new cases was by subtracting the previous day from current day.
+    # if the new # of cases is bigger than last biggest it is saved
+    count = 0
+    oldmaxh = 0
+    worstdaynumh = 0
+    for i in num_casesh:
+        k = num_casesh[count-1]
+        newcases = i - k
+        if newcases > oldmaxh:
+            worstdaynumh = num_casesh.index(i)
+            oldmaxh = newcases
+        count += 1
+
+    daylisth = harr[worstdaynumh]
+    dayh = daylisth[0]
+    newh = oldmaxh
+
+    # Repeat for Rockingham
+
+    count = 0
+    oldmax = 0
+    worstdaynum = 0
+    for i in num_casesr:
+        k = num_casesr[count-1]
+        newcases = i - k
+        if newcases > oldmax:
+            worstdaynum = num_casesr.index(i)
+            oldmax = newcases
+        count += 1
+
+    daylistr = rock[worstdaynum]
+    dayr = daylistr[0]
+    newr = oldmax
+
+    return dayh, newh, dayr, newr
 
 def third_question(data):
     # Write code to address the following question:Use print() to display your responses.
     # What was the worst 7-day period in either the city and county for new COVID cases?
     # This is the 7-day period where the number of new cases was maximal.
 
-    return
+    #create empty list (copied from 1)
+    rock=[]
+    harr=[]
+    #put tuples into two separate lists: one for Harrisonburg City (HBC) and one for Rockingham (RH)
+    #the lines are tuples and county is in the 1st index (copied from 1)
+    for line in data:
+        if line[1] == 'Rockingham':
+            rock.append(line)
+        else:
+            harr.append(line)
+
+    #new lists for #of cases (copied from 2)
+    num_casesr=[]
+    num_casesh=[]
+    for thing in rock:
+        case = thing[4]
+        num_casesr.append(case)
+
+    for thing in harr:
+        case = thing[4]
+        num_casesh.append(case)
+
+    #put all the new cases in a list, find the average of every 7 days and store the highest average
+    #this is Rockingham
+    before = 0
+    case = []
+    for i in num_casesr:
+        newcases = i - before
+        case.append(newcases)
+        before = i
+    oldav = 0
+    inav = 0
+    for j in case:
+        k = case.index(j)
+        sevenav = sum(case[k-3:k+3])/7
+        if sevenav > oldav:
+            oldav = sevenav
+            inav = k
+    lina = rock[inav-3]
+    linb = rock[inav+3]
+    daa = lina[0]
+    dab = linb[0]
+
+
+    #put all the new cases in a list, find the average of every 7 days and store the highest average
+    #this is HBC
+    before = 0
+    case = []
+
+    for i in num_casesh:
+        newcases = i - before
+        case.append(newcases)
+        before = i
+    oldav = 0
+    inav = 0
+    for j in case:
+        k = case.index(j)
+        sevenav = sum(case[k-3:k+3])/7
+        if sevenav > oldav:
+            oldav = sevenav
+            inav = k
+    linah = harr[inav-3]
+    linbh = harr[inav+3]
+    daah = linah[0]
+    dabh = linbh[0]
+
+    threea = str("The worst days in Rockingham were between " + str(daa) + " and " + str(dab) + ".")
+    threeb = str("The worst days in Harrisonburg were between " + str(daah) + " and " + str(dabh) + ".")
+
+    return threea, threeb
 
 if __name__ == "__main__":
     data = parse_nyt_data('us-counties.csv')
@@ -97,17 +246,23 @@ if __name__ == "__main__":
     # write code to address the following question: Use print() to display your responses.
     # When was the first positive COVID case in Rockingham County?
     # When was the first positive COVID case in Harrisonburg?
-    first_question(data)
+    (answer1a, answer1b) = first_question(data)
+
+    print("The first instance of COVID in Rockingham was " + str(answer1b))
+    print("The first instance of COVID in Harrisonburg was " + str(answer1a))
+
 
 
     # write code to address the following question: Use print() to display your responses.
     # What day was the greatest number of new daily cases recorded in Harrisonburg?
     # What day was the greatest number of new daily cases recorded in Rockingham County?
-    second_question(data)
+    (twoaa, twoab, twoba, twobb) = second_question(data)
+    print("The worst day in Harrisonburg was " + str(twoaa) + " with " + str(twoab) + " new cases.")
+    print("The worst day in Rockingham was " + str(twoba) + " with " + str(twobb) + " new cases.")
 
     # write code to address the following question:Use print() to display your responses.
     # What was the worst seven day period in either the city and county for new COVID cases?
     # This is the 7-day period where the number of new cases was maximal.
-    third_question(data)
-
-
+    (athree, bthree) = third_question(data)
+    print(athree)
+    print(bthree)
