@@ -126,39 +126,30 @@ def second_question(data):
 
     # find out what the worse amount of new cases was by subtracting the previous day from current day.
     # if the new # of cases is bigger than last biggest it is saved
-    count = 0
-    oldmaxh = 0
-    worstdaynumh = 0
-    for i in num_casesh:
-        k = num_casesh[count-1]
-        newcases = i - k
-        if newcases > oldmaxh:
-            worstdaynumh = num_casesh.index(i)
-            oldmaxh = newcases
-        count += 1
-
-    daylisth = harr[worstdaynumh]
-    dayh = daylisth[0]
-    newh = oldmaxh
+    #Harrisonburg
+    add_hlist = []
+    for i in range(0,(len(num_casesh))):
+        added_h = num_casesh[i]-num_casesh[i-1]
+        add_hlist.append(added_h)
+    maxh = max(add_hlist)
+    maxindexh = add_hlist.index(maxh)
+    worstlisth = harr[maxindexh]
+    worstdayh = worstlisth[0]
 
     # Repeat for Rockingham
+    add_rlist = []
+    for i in range(0,(len(num_casesr))):
+        added_r = num_casesr[i]-num_casesr[i-1]
+        add_rlist.append(added_r)
+    maxr = max(add_rlist)
+    maxindexr = add_rlist.index(maxr)
+    worstlistr = rock[maxindexr]
+    worstdayr = worstlistr[0]
 
-    count = 0
-    oldmax = 0
-    worstdaynum = 0
-    for i in num_casesr:
-        k = num_casesr[count-1]
-        newcases = i - k
-        if newcases > oldmax:
-            worstdaynum = num_casesr.index(i)
-            oldmax = newcases
-        count += 1
+    seconda = ("The worst day in Harrisonburg was " + str(worstdayh) + " with " + str(maxh) + " cases.")
+    secondb = ("The worst day in Rockingham was " + str(worstdayr) + " with " + str(maxr) + " cases.")
 
-    daylistr = rock[worstdaynum]
-    dayr = daylistr[0]
-    newr = oldmax
-
-    return dayh, newh, dayr, newr
+    return seconda, secondb
 
 def third_question(data):
     # Write code to address the following question:Use print() to display your responses.
@@ -256,9 +247,9 @@ if __name__ == "__main__":
     # write code to address the following question: Use print() to display your responses.
     # What day was the greatest number of new daily cases recorded in Harrisonburg?
     # What day was the greatest number of new daily cases recorded in Rockingham County?
-    (twoaa, twoab, twoba, twobb) = second_question(data)
-    print("The worst day in Harrisonburg was " + str(twoaa) + " with " + str(twoab) + " new cases.")
-    print("The worst day in Rockingham was " + str(twoba) + " with " + str(twobb) + " new cases.")
+    (seca, secb) = second_question(data)
+    print(seca)
+    print(secb)
 
     # write code to address the following question:Use print() to display your responses.
     # What was the worst seven day period in either the city and county for new COVID cases?
