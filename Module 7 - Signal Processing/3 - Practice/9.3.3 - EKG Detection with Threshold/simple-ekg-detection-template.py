@@ -23,7 +23,8 @@ Step 2: Determine how much data to use...
 """
 # If you wish to only run on ~10s of data uncomment the line below
 # if you wish to run on all data, comment out this line
-signal = signal[0:3300]
+#signal = signal[0:3300]
+signal = signal[0:10000]
 
 
 """
@@ -32,13 +33,13 @@ Adjust the values for threshold and timeout to change the detection method/appro
 """
 
 # set a detection threshold (YOUR VALUE BELOW)
-detection_threshold = -1
+detection_threshold = 1.75
 
 # set a heart beat time out (YOUR VALUE BELOW)
-detection_time_out = -1
+detection_time_out = 200
 
 # track the last time we found a beat
-last_detected_index = -1
+last_detected_index = -500
 
 # keep not of where we are in the data
 current_index = 0
@@ -53,9 +54,12 @@ Step 4: Manually iterate through the signal and apply the threshold with timeout
 # loop through signal finding beats
 for value in signal:
     ## Use a conditional statement to see if the signal is above a threshold...
-
-    ## Once an index is found, place the index in the beats_detected list
+    if value > detection_threshold and signal[current_index-1] < value > signal[current_index+1] and (current_index - last_detected_index) > detection_time_out:
+        beats_detected.append(current_index)
+        ## Once an index is found, place the index in the beats_detected list
+        last_detected_index = current_index
     current_index += 1
+
 
 print("Within the sample we found ", len(beats_detected), " heart beats with manual search!")
 
