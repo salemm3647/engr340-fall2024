@@ -40,9 +40,10 @@ def detect_heartbeats(filepath):
 
     # pass data through differentiator
     ## your code here
+    differences = []
     for i in range(0,len(signal)):
         diff = signal[i] - signal[i-1]
-        diffs.append(diff)
+        differences.append(diff)
 
 
     # pass data through square function
