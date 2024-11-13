@@ -1,6 +1,6 @@
 import numpy as np
 import scipy.signal
-from mpmath import diffs
+from scipy.signal import find_peaks
 
 from ekg_testbench import EKGTestBench
 
@@ -29,19 +29,16 @@ def detect_heartbeats(filepath):
 
     # identify one column to process. Call that column signal
 
-    signal = V1 ## your code here
+    ## your code here
+    signal = V1
 
     # pass data through LOW PASS FILTER (OPTIONAL)
-    ## your code here
-
-
-    # pass data through HIGH PASS FILTER (OPTIONAL) to create BAND PASS result
     ## your code here
 
     # pass data through differentiator
     ## your code here
     differences = []
-    for i in range(0,len(signal)):
+    for i in range(1,len(signal)):
         diff = signal[i] - signal[i-1]
         differences.append(diff)
 
@@ -49,22 +46,24 @@ def detect_heartbeats(filepath):
     # pass data through square function
     ## your code here
     squares = []
-    for i in  range(0,len(diffs)):
-        square = (diffs[i])^2
+    for i in  range(0,len(differences)):
+        square = (differences[i])**2
         squares.append(square)
+
     # pass through moving average window
     ## your code here
     averages = []
-    for i in  range(0,len(squares)):
-        av = squares[i] + squares[i+1] + squares[i+2] + + squares[i+3] + + squares[i+4] + + squares[i+5] + squares[i+6] + squares[i+7] + squares[i+8] + squares[i+9] + squares[i+10]
+    for i in  range(0,len(squares)-9):
+        av = (squares[i] + squares[i+1] + squares[i+2] + + squares[i+3] + + squares[i+4] + + squares[i+5] +
+              squares[i+6] + squares[i+7] +  squares[i+8] + squares[i+9])
         averages.append(av)
         
     # use find_peaks to identify peaks within averaged/filtered data
     # save the peaks result and return as part of testbench result
 
     ## your code here peaks,_ = find_peaks(....)
-
-    beats = None
+    peaks, _ = find_peaks(averages, height=0.005, distance=150)
+    beats = peaks
 
     # do not modify this line
     return signal, beats
